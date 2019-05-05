@@ -7,6 +7,9 @@ export interface IAngle{
     readonly Bottom: number;
     readonly Left: number;
 }
+/**
+ * 瓦片（每一个方格）
+ */
 export interface Itiles extends Painter {
     readonly id: number;
     readonly imgOffsetX: number;
@@ -17,4 +20,10 @@ export interface Itiles extends Painter {
     x: number;
     y: number;
     angle: IAngle;
+}
+
+/**
+ * 瓦片管理器
+ */
+export interface ItilesManage extends Painter {
 }

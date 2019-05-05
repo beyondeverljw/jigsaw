@@ -6,5 +6,6 @@ dom.init(function(){
     if(ctx){
         game.init(ctx);
     }
-    console.log('dom init')
+    console.log('dom init');
+    
 });

@@ -19,12 +19,17 @@ export class Tiles implements Itiles{
         ctx.save();
         // ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         ctx.beginPath();
-        ctx.strokeStyle = 'orange';
-        ctx.lineWidth = 0.5;
-        ctx.rect(this.x, this.y, this.width, this.height);
+        ctx.strokeStyle = 'rgba(0,255,0,255)';
+        ctx.lineWidth = 10;
+        // ctx.translate(100, 200);
+        ctx.strokeRect(this.x, this.y, this.width, this.height);
         // ctx.clip();
-        ctx.drawImage(this.img, this.imgOffsetX, this.imgOffsetY, this.width, this.height, 0, 0, this.width, this.height);
-        ctx.stroke();
+        ctx.fillRect(this.x,this.y, 20, 50);
+        console.log(this);
+        // ctx.drawImage(this.img, this.imgOffsetX, this.imgOffsetY, this.width, this.height, this.imgOffsetX, this.imgOffsetY, this.width, this.height);
+        // ctx.rotate(Math.PI * 1/2);
+        
+        
         ctx.restore();
         return ctx;
     }
