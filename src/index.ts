@@ -7,5 +7,4 @@ dom.init(function(){
         game.init(ctx);
     }
     console.log('dom init');
-    
 });

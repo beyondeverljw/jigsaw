@@ -1,37 +1,45 @@
-import { ItilesManage, Itiles } from '../types/index';
+import { ItilesManage, Itiles, ItilesManageEvent} from '../types/index';
+import Tiles from './tiles';
 
-export default class TilesManage implements ItilesManage{
+export default class TilesManage implements ItilesManage, ItilesManageEvent{
     private collections: Array<Itiles> = [];
-    constructor(tilesCount?: number){
-        if(tilesCount !== undefined){
-            this.collections = new Array(tilesCount);
+    private spaceTilesData: ImageData | null = null;
+    readonly step: number;
+    constructor(
+        readonly ctx: CanvasRenderingContext2D,
+        readonly img: HTMLImageElement,
+        readonly rows: number = 6,
+        readonly cols: number = 4
+    ){
+        this.collections = new Array( rows * cols );
+        this.step = this.ctx.canvas.width / cols;
+        this.init();
+    }
+    /**
+     * 初始化所有瓦片
+     */
+    private init() :void{
+        for(let i = 0; i < this.rows * this.cols; i++ ) {
+            this.collections[i] = new Tiles( this, i );
+        }
+        this.paint();
+    }
+    setSpaceTiles(id: number): void {
+        const tiles = this.getTilesById(id);
+        if(tiles){
+            this.spaceTilesData = tiles.setSpaceTiles();
         }
     }
     /**
-     * 检测要添加进集合的数据是否在集合中已经存在
-     * @param item
+     * 获取空白瓦片
      */
-    private checkIdHasRepeat(item: Itiles): boolean{
-        if(this.collections.length === 0){
-            return false;
-        }else{
-            return this.collections.some((v: Itiles) => {
-                return v.id === item.id;
-            });
-        }
+    getSpaceTiles(): Itiles | null{
+        return this.collections.find((v: Itiles) => {
+            return v.isSpaceTiles === true;
+        });
     }
-    /**
-     * 将瓦片添加进管理器
-     * @param item
-     */
-    add(item: Itiles): boolean{
-        let hasRepeat: boolean = this.checkIdHasRepeat(item);
-        if( hasRepeat === true ){
-            return false;
-        }else{
-            this.collections[item.id] = item;
-            return true;
-        }
+    getSpaceTilesData(): ImageData{
+        return this.spaceTilesData;
     }
     /**
      * 根据id获取瓦片
@@ -49,13 +57,22 @@ export default class TilesManage implements ItilesManage{
      * 
      * @param ctx 
      */
-    paint(ctx: CanvasRenderingContext2D){
-        let i = 0;
+    paint(): CanvasRenderingContext2D{
         this.collections.forEach((v: Itiles) => {
-            console.log(i++);
-            v.paint(ctx);
-            
+            v.paint();
         })
-        return ctx;
+        return this.ctx;
+    }
+    doUp(e: Event): void {
+
+    }
+    doRight(e: Event): void {
+        
+    }
+    doDown(e: Event): void {
+        
+    }
+    doLeft(e: Event): void {
+        
     }
 }
