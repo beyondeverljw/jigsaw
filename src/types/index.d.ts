@@ -1,8 +1,34 @@
+export interface IeventHandle{
+    id: number;
+    handle: (eventId: number, ...rest: any[]) => void;
+    thisArg: object | null;
+    param: any[]
+}
+export interface IdomKeyboardEvent{
+    keycode: number,
+    eventName: string,
+    manage: IeventManage,
+    triggerPayLoad: any []
+}
+/**
+ * 抽象事件管理，用于与dom事件解耦
+ */
+export interface IeventManage {
+    on: (eventName: string, handle: (eventId: number, ...arg: any[])=> void, thisArg: object | null, ...rest: any[]) => number;
+    off: (eventName: string, handleId?: number) => void;
+    trigger: (eventName: string, ...payLoad: any[]) => void;
+}
+/**
+ * 所有绘画类需要实现的接口
+ */
 export interface Painter{
     ctx: CanvasRenderingContext2D;
     paint(): CanvasRenderingContext2D;
 }
 
+/**
+ * jigsaw游戏需要实现的方法
+ */
 export interface ItilesManageEvent{
     doUp: (e: Event) => void;
     doRight: (e: Event) => void;

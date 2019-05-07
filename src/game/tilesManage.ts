@@ -63,16 +63,16 @@ export default class TilesManage implements ItilesManage, ItilesManageEvent{
         })
         return this.ctx;
     }
-    doUp(e: Event): void {
-
+    doUp(): void {
+        console.log('doUp');
     }
-    doRight(e: Event): void {
-        
+    doRight(): void {
+        console.log('doRight');
     }
-    doDown(e: Event): void {
-        
+    doDown(): void {
+        console.log('doDown');
     }
-    doLeft(e: Event): void {
-        
+    doLeft(): void {
+        console.log('doLeft');
     }
 }
