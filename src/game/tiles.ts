@@ -8,6 +8,7 @@ export default class Tiles implements Itiles{
     posX: number;
     posY: number;
     isSpaceTiles: Boolean = false;
+    private imgInfo: number[];
     
     constructor(
         readonly manage: ItilesManage,
@@ -20,6 +21,11 @@ export default class Tiles implements Itiles{
     }
     protected init(){
         this.initPosXandY();
+        this.setImgInfo();
+    }
+    private setImgInfo(): void{
+        let { step } = this.manage;
+        this.imgInfo = [this.posX, this.posY, step, step];
     }
     /**
      * 根据posId计算出posX, posY, 并赋值
@@ -30,20 +36,39 @@ export default class Tiles implements Itiles{
         this.posY = step * ( Math.floor(this.posId / cols) );
     }
 
-    getTopTiles(): Itiles | null{
-        return null;
+    getTopTiles(): number | null{
+        let {rows, cols} = this.manage,
+            curRows = Math.floor(this.posId / cols);
+        if(curRows === 0){
+            return null;
+        }else{
+            return this.posId - cols;
+        }
     };
-    getRightTiles(): Itiles | null{
-        return null;
+    getRightTiles(): number | null{
+        const {cols} = this.manage;
+        if(this.posId % cols === cols - 1){
+            return null;
+        } else {
+            return this.posId + 1
+        }
     };
-    getBottomTiles(): Itiles | null{
-        return null;
+    getBottomTiles(): number | null{
+        let {rows, cols} = this.manage,
+            curRows = Math.floor(this.posId / cols);
+        if(curRows === rows){
+            return null;
+        }else{
+            return this.posId + cols;
+        }
     };
-    getLeftTiles(): Itiles | null{
-        return null;
-    };
-    interchange(tiles: Itiles): void{
-
+    getLeftTiles(): number | null{
+        const {cols} = this.manage;
+        if(this.posId % cols === 0){
+            return null;
+        }else{
+            return this.posId - 1;
+        }
     };
     setSpaceTiles(): ImageData{
         this.isSpaceTiles = true;
@@ -57,14 +82,31 @@ export default class Tiles implements Itiles{
         if(this.isSpaceTiles === true){
             ctx.clearRect(this.posX, this.posY, step, step);
         }else{
+            // ctx.clearRect(this.posX, this.posY, step, step);
             ctx.save();
             ctx.translate(this.posX + step / 2, this.posY + step / 2);
             ctx.rotate(this.angle);
             ctx.translate(- this.posX - step / 2, - this.posY - step / 2);
-            ctx.drawImage(this.img, this.posX, this.posY, step, step, this.posX, this.posY, step, step);
+            ctx.drawImage(this.img, this.imgInfo[0],this.imgInfo[1],this.imgInfo[2],this.imgInfo[3], this.posX, this.posY, step, step);
             ctx.restore();
         }
-        
         return ctx;
+    }
+    erase(): void{
+        this.ctx.clearRect(this.posX, this.posY, this.manage.step, this.manage.step);
+    }
+    paintLight(): CanvasRenderingContext2D{
+        let ctx = this.ctx;
+        this.paint();
+        ctx.save();
+        // ctx.shadowBlur = 20;
+        // ctx.shadowColor = 'rgba(128,0,0,0.7)';
+        // ctx.shadowOffsetX = 0;
+        // ctx.shadowOffsetY = 0;
+        ctx.restore();
+        return ctx;
+    }
+    move(targetX: number, targetY: number){
+        
     } 
 }

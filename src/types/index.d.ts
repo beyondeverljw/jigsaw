@@ -18,13 +18,6 @@ export interface IeventManage {
     off: (eventName: string, handleId?: number) => void;
     trigger: (eventName: string, ...payLoad: any[]) => void;
 }
-/**
- * 所有绘画类需要实现的接口
- */
-export interface Painter{
-    ctx: CanvasRenderingContext2D;
-    paint(): CanvasRenderingContext2D;
-}
 
 /**
  * jigsaw游戏需要实现的方法
@@ -35,6 +28,22 @@ export interface ItilesManageEvent{
     doDown: (e: Event) => void;
     doLeft: (e: Event) => void;
 }
+
+/**
+ * 所有绘画类需要实现的接口
+ */
+export interface Painter{
+    ctx: CanvasRenderingContext2D;
+    paint(): CanvasRenderingContext2D;
+}
+/**
+ * 点
+ */
+export interface Ipoint{
+    x: number,
+    y: number
+}
+
 /**
  * 瓦片（每一个方格）
  * ctx
@@ -54,14 +63,15 @@ export interface Itiles extends Painter {
     posX: number;
     posY: number;
     isSpaceTiles: Boolean;
-    getTopTiles(): Itiles | null;
-    getRightTiles(): Itiles | null;
-    getBottomTiles(): Itiles | null;
-    getLeftTiles(): Itiles | null;
-    interchange(tiles: Itiles): void;
+    getTopTiles(): number | null;
+    getRightTiles(): number | null;
+    getBottomTiles(): number | null;
+    getLeftTiles(): number | null;
     setSpaceTiles(): ImageData;
+    paintLight(): CanvasRenderingContext2D;
+    erase(): void;
+    move(x: number, y: number): void;
 }
-
 /**
  * 瓦片管理器
  * rows: 拼图容器的行数
@@ -73,8 +83,18 @@ export interface ItilesManage extends Painter {
     readonly rows: number;
     readonly cols: number;
     readonly step: number;
-    getTilesById(id: number): Itiles | null;
+    getTilesByPosId(posId: number): Itiles | null;
     setSpaceTiles(id: number): void;
     getSpaceTiles(): Itiles | null;
-    getSpaceTilesData(): ImageData
+    getSpaceTilesData(): ImageData;
+    interchange(tiles1: Itiles, tiles2: Itiles): void;
+}
+
+export interface IanimateOption{
+    [prop: string]: number
+}
+export interface Ianimate extends Painter{
+    status: number;
+    // run: (anim: ()=> boolean | PromiseConstructorLike, thisArg: object | null) => void;
+    run(p1: Itiles, p2: Itiles): void
 }
