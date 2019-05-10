@@ -72,8 +72,8 @@ export default class TilesManage implements ItilesManage, ItilesManageEvent{
     }
     
     /**
-     * 根据id获取瓦片
-     * @param id
+     * 根据posId获取瓦片
+     * @param posId
      */
     getTilesByPosId(posId: number): Itiles | null{
         let len: number = this.collections.length;
