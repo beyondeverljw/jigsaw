@@ -4,7 +4,8 @@ const path = require('path');
     entry: './src/index.ts',
     devtool: 'inline-source-map',
     devServer: {
-      port: 5600
+      port: 5600,
+      host: '0.0.0.0'
     },
     module: {
       rules: [

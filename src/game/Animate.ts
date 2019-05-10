@@ -34,9 +34,9 @@ export class Animate implements Ianimate{
                 y: p1.posY
             };
         (function anim(p1: Itiles, p2: Itiles){
-            console.group('in anim');
-            console.log(p1);
-            console.groupEnd();
+            // console.group('in anim');
+            // console.log(p1);
+            // console.groupEnd();
             self.status = AnimateStatus.InAnimate;
             // 如果水平，垂直坐标同时为0，则已到达目标点，退出递归
             if((p1End.x - p1.posX) || (p1End.y - p1.posY)){

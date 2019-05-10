@@ -104,7 +104,7 @@ export default class TilesManage implements ItilesManage, ItilesManageEvent{
     };
 
     doUp(): void {
-        console.log('doUp');
+        // console.log('doUp');
         if(this.anim.status === AnimateStatus.InAnimate) return;
         let space = this.getSpaceTiles(),
             underSpaceId = space.getBottomTiles(),
@@ -116,7 +116,7 @@ export default class TilesManage implements ItilesManage, ItilesManageEvent{
         }
     }
     doRight(): void {
-        console.log('doRight');
+        // console.log('doRight');
         if(this.anim.status === AnimateStatus.InAnimate) return;
         let space = this.getSpaceTiles(),
             leftSpaceId = space.getLeftTiles(),
@@ -128,7 +128,7 @@ export default class TilesManage implements ItilesManage, ItilesManageEvent{
         }
     }
     doDown(): void {
-        console.log('doDown');
+        // console.log('doDown');
         if(this.anim.status === AnimateStatus.InAnimate) return;
         let space = this.getSpaceTiles(),
             topSpaceId = space.getTopTiles(),
@@ -140,7 +140,7 @@ export default class TilesManage implements ItilesManage, ItilesManageEvent{
         }
     }
     doLeft(): void {
-        console.log('doLeft');
+        // console.log('doLeft');
         if(this.anim.status === AnimateStatus.InAnimate) return;
         let space = this.getSpaceTiles(),
             rightSpaceId = space.getRightTiles(),
